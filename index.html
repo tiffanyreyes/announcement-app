@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Announcement Pinboard</title>
+        <link href="style.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="pinboard">
+            <h1>Announcement Pinboard</h1>
+            <div class="announcement-form">
+                <input type="text" id="announcementTitle" placeholder="Announcement Title" />
+                <input type="text" id="announcementDescription" placeholder="Description" />
+                <input type="date" id="announcementDate" placeholder="Select a date" />
+                <div class="form-group">
+                    <select id="eventType">
+                        <option value="Cancellation/Refund">Cancellation/Refund</option>
+                        <option value="Reschedule">Reschedule</option>
+                        <option value="API Issues">API Issues</option>
+                        <option value="Event">Event</option>
+                    </select>
+                    <select id="urgencyLevel">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+                <div>
+                    <button onclick="addAnnouncement()">Post</button>
+                </div>
+            </div>
+            <ul class="announcements" id="announcementsList"></ul>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', loadAnnouncements);
+
+            function loadAnnouncements() {
+                const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+                const announcementsList = document.getElementById('announcementsList');
+                announcementsList.innerHTML = '';
+
+                announcements.forEach((announcement, index) => {
+                    const li = document.createElement('li');
+                    li.className = `announcement-item ${announcement.urgency}`;
+                    li.innerHTML = `
+                        <strong>${announcement.type.toUpperCase()}</strong><br>
+                        <span>${announcement.date}</span><br>
+                        <span>${announcement.title} - ${announcement.description}</span>
+                        <button class="delete-btn" onclick="deleteAnnouncement(${index})">X</button>
+                    `;
+                    announcementsList.appendChild(li);
+                });
+            }
+
+            function addAnnouncement() {
+                const titleInput = document.getElementById('announcementTitle');
+                const descriptionInput = document.getElementById('announcementDescription');
+                const dateInput = document.getElementById('announcementDate');
+                const typeInput = document.getElementById('eventType');
+                const urgencyInput = document.getElementById('urgencyLevel');
+
+                const title = titleInput.value.trim();
+                const description = descriptionInput.value.trim();
+                const date = dateInput.value;
+                const type = typeInput.value;
+                const urgency = urgencyInput.value;
+
+                if (title === '' || description === '' || date === '') return;
+
+                const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+                announcements.push({ title, description, date, type, urgency });
+                localStorage.setItem('announcements', JSON.stringify(announcements));
+
+                titleInput.value = '';
+                descriptionInput.value = '';
+                dateInput.value = '';
+                loadAnnouncements();
+            }
+
+            function deleteAnnouncement(index) {
+                let announcements = JSON.parse(localStorage.getItem('announcements'));
+                announcements.splice(index, 1);
+                localStorage.setItem('announcements', JSON.stringify(announcements));
+                loadAnnouncements();
+            }
+        </script>
+    </body>
+</html>
+

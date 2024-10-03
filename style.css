@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+.pinboard {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    margin-top: 0;
+}
+.announcement-form {
+    margin-bottom: 20px;
+}
+.form-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+input, select, button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+}
+button {
+    background-color: #5cb85c;
+    color: white;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #4cae4c;
+}
+.announcements {
+    list-style-type: none;
+    padding: 0;
+}
+.announcement-item {
+    background: #e7f3fe;
+    border-left: 5px solid;
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
+}
+.announcement-title {
+    font-weight: bold; /* Makes the text bold */
+}
+.low {
+    border-color: green;
+}
+.medium {
+    border-color: orange;
+}
+.high {
+    border-color: red;
+}
+.delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 2px 5px;  /* Reduced padding for a smaller button */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;  /* Smaller font size */
+    line-height: 1.5;  /* Reduce line height to keep it compact */
+    margin-left: 1px;  /* Space between the text and button */
+    width: 50px;
+}
+.delete-btn:hover {
+    background: darkred;
+}
